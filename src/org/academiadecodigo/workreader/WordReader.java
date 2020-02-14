@@ -60,14 +60,14 @@ public class WordReader implements Iterable<String>{
         }
 
 
-        public String[] wordIterator() {
+        public void wordIterator() {
 
                 try {
                     sentence = bReader.readLine();
                     if (sentence == null) {
                         close();
-
-
+                    } else {
+                        words = sentence.split(" ");
                     }
 
                 } catch (IOException e) {
@@ -77,9 +77,6 @@ public class WordReader implements Iterable<String>{
                 }
 
 
-                words = sentence.split(" ");
-                return words;
-
 
         }
 
@@ -88,8 +85,8 @@ public class WordReader implements Iterable<String>{
                 public boolean hasNext() {
                     if(index == words.length) {
 
-                        words = wordIterator();
-                        if(words == null){
+                        wordIterator();
+                        if(sentence == null){
                             return false;
                         }
                         index = 0;
@@ -108,13 +105,7 @@ public class WordReader implements Iterable<String>{
 
                 @Override
                 public String next() {
-                        if(words == null){
-
-                            return "";
-
-                        }
-
-                        return words[index++];
+                    return words[index++];
                 }
             };
 
